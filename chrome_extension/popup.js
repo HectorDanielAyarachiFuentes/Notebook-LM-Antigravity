@@ -1,10 +1,21 @@
 const REQUIRED_KEYS = ["SID", "SAPISID", "HSID", "SSID"];
 
 async function getCookies() {
-  const cookies = await chrome.cookies.getAll({ url: "https://notebooklm.google.com/" });
+  const [googleCookies, nlmCookies, nbCookies, nlmUrlCookies, nbUrlCookies] = await Promise.all([
+    chrome.cookies.getAll({ domain: "google.com" }),
+    chrome.cookies.getAll({ domain: "notebooklm.google.com" }),
+    chrome.cookies.getAll({ domain: "notebook.google.com" }),
+    chrome.cookies.getAll({ url: "https://notebooklm.google.com/" }),
+    chrome.cookies.getAll({ url: "https://notebook.google.com/" })
+  ]);
 
   const map = new Map();
-  for (const c of cookies) {
+  // 1. First set general google.com cookies
+  for (const c of googleCookies) {
+    map.set(c.name, c.value);
+  }
+  // 2. Overwrite with specific notebook cookies (crucial for OSID & __Secure-OSID)
+  for (const c of [...nlmCookies, ...nbCookies, ...nlmUrlCookies, ...nbUrlCookies]) {
     map.set(c.name, c.value);
   }
 
