@@ -12,3 +12,7 @@ Desktop.ini
 # Temporary / sensitive files if any
 *.tmp
 .env
+cookies.txt
+*.cookie
+auth.json
+
