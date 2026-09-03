@@ -31,12 +31,12 @@ If authentication is missing or expired (RPC Error 16):
    If valid cookies are in the clipboard, it updates `~/.notebooklm-mcp/auth.json` immediately and calls `refresh_auth`.
 
 2. **1-Click Extraction via Chrome Extension (`chrome_extension/`):**
-   - User clicks the **NotebookLM Sync** extension icon in Chrome while on `notebooklm.google.com`.
-   - Cookies (including HttpOnly `SID`/`HSID`) are instantly copied to clipboard.
-   - User tells the agent: *"conéctate"* or *"actualiza sesión"*.
+   - User clicks the **NotebookLM Sync** extension icon in Chrome while on `notebooklm.google.com` or `notebook.google.com` (Gemini Notebook).
+   - Cookies (including HttpOnly `SID`/`HSID` and service `OSID`) are instantly copied to clipboard.
+   - User tells the agent: *"conéctate"* or *"has tu magia"*.
 
-3. **Fallback Extraction:**
-   - **DevTools:** `notebooklm.google.com` -> `F12` -> `Network` -> `F5` -> click `batchexecute` -> copy `cookie:` header -> run `python auth_helper.py` or paste in chat.
+3. **Manual Extraction (DevTools F12):**
+   - **DevTools:** In NotebookLM press `F12` -> `Network` -> `F5` -> click `batchexecute` -> copy `cookie:` header -> paste in chat or run `python auth_helper.py`.
    - **CLI Auto Mode:** Close Chrome and run `notebooklm-mcp-auth`.
 
 ## Workflow
