@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "NotebookLM Sync - Antigravity",
+  "version": "1.0",
+  "description": "Extrae y copia al portapapeles en 1 clic las cookies de NotebookLM para Antigravity IDE",
+  "permissions": [
+    "cookies",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "*://*.google.com/*",
+    "*://notebooklm.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Sincronizar NotebookLM"
+  }
+}
