@@ -27,39 +27,28 @@ uv tool install notebooklm-mcp-server
 ```
 *(Si no tienes `uv` instalado, puedes usar `pip install notebooklm-mcp-server`).*
 
-### Paso B: Obtener e Importar las Cookies (Dos Métodos)
+### Paso B: Obtener e Importar las Cookies (Dos Métodos Principales)
 
-Puedes elegir entre el método automático (más directo si cierras el navegador) o el manual (por archivo):
+Elige el método que te resulte más cómodo:
 
-#### 🚀 Opción 1: Modo Automático (Recomendado)
-Este método lanza un navegador Chrome temporal controlado por el terminal para capturar las cookies automáticamente:
-1. **Cierra completamente todas las ventanas de Google Chrome** en tu sistema.
-2. Abre tu terminal y ejecuta:
-   ```powershell
-   notebooklm-mcp-auth
-   ```
-3. Se abrirá una ventana de Chrome automáticamente. Si no te redirige solo, navega a `https://notebooklm.google.com` e inicia sesión con tu cuenta de Google.
-4. En cuanto entres y el terminal detecte la sesión de cuadernos, guardará los datos automáticamente en `C:\Users\<Usuario>\.notebooklm-mcp\auth.json` y finalizará el comando.
+#### ⚡ Opción 1: Con la Extensión de 1-Clic (Recomendado)
+1. Abre en Chrome: `chrome://extensions`.
+2. Activa el **Modo de desarrollador** (arriba a la derecha).
+3. Haz clic en **Cargar descomprimida** y selecciona la carpeta `chrome_extension` del proyecto.
+4. En [NotebookLM](https://notebooklm.google.com), haz 1 clic en el icono de la **`N`** (NotebookLM Sync) para copiar tus cookies al portapapeles.
+5. En Antigravity, dile al asistente: *"conéctate"* o ejecuta `python auth_helper.py --auto`.
 
-#### 📝 Opción 2: Modo Manual (Por archivo de texto)
-Úsala si la versión automática falla, no abre Chrome o da errores de WebSocket.
+#### 📝 Opción 2: Modo Manual desde el Navegador (Sin extensiones)
+1. Abre tu navegador y entra a [NotebookLM](https://notebooklm.google.com) con tu sesión iniciada.
+2. Presiona **F12** y selecciona la pestaña **Network** (Red).
+3. Recarga la página (**F5**) y haz clic en cualquier petición de la lista (por ejemplo, `batchexecute`).
+4. En el panel lateral derecho, ve a **Headers** -> **Request Headers** y copia todo el valor de **`cookie:`** (Clic derecho -> *Copy value*).
+5. Pega ese texto en el chat de Antigravity, o ejecuta `python auth_helper.py` en la terminal.
 
-> 🤖 **Instrucciones para Asistentes de IA (Cómo automatizar este paso):**
-> 1. El asistente de IA debe verificar si ya existe el archivo `cookies.txt` en la raíz del espacio de trabajo.
-> 2. Si existe, la IA debe ejecutar automáticamente en la terminal del sistema:
->    ```powershell
->    python auth_helper.py
->    ```
->    *Este script detectará automáticamente las cookies de tu portapapeles o de `cookies.txt`, las validará y guardará en la caché de NotebookLM MCP.*
->
-> 3. Si el archivo no existe o está vacío, la IA debe dar las siguientes instrucciones claras al usuario para que extraiga la cookie de su navegador habitual, la guarde en `cookies.txt`, o simplemente la copie al portapapeles y ejecute `python auth_helper.py`:
->
-> **Pasos para que el usuario obtenga la cookie:**
-> 1. Abre tu navegador (Chrome, Opera GX, etc.) y entra a `https://notebooklm.google.com`.
-> 2. Presiona **F12** y selecciona la pestaña **Network** (Red).
-> 3. Recarga la página (F5) y haz clic en cualquier petición de la lista (por ejemplo, `batchexecute` o `notebooks`).
-> 4. En el panel lateral derecho, ve a **Request Headers** y copia todo el valor de la cabecera **`cookie:`** (Clic derecho -> *Copy value*).
-> 5. Ejecuta en la terminal `python auth_helper.py` (lo detectará del portapapeles automáticamente) o crea un archivo `cookies.txt` pegando el valor.
+#### 🖥️ Opción 3: Modo CLI Automático (notebooklm-mcp-auth)
+1. Cierra completamente Google Chrome en tu sistema.
+2. En la terminal ejecuta: `notebooklm-mcp-auth`.
+3. Inicia sesión en la ventana de Chrome que se abrirá y el CLI guardará los tokens automáticamente.
 
 
 ### Paso D: Configurar el Editor Antigravity

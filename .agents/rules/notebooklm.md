@@ -10,10 +10,9 @@ Whenever interacting with the `notebooklm` MCP server in this workspace:
      python auth_helper.py --auto
      ```
      If valid cookies are found, call `refresh_auth` and resume seamlessly.
-   - **User Guidance:** If auto-renewal fails, guide the user with the easiest method:
-     - **Option 1 (Fastest / 1-Click):** If the user has loaded `chrome_extension/` in Chrome, tell them to simply click the extension icon on NotebookLM, which copies the session to the clipboard, and then say *"conéctate"*.
-     - **Option 2 (Manual DevTools):** Go to `notebooklm.google.com` -> `F12` -> `Network` -> `F5` -> click `batchexecute` -> copy `cookie:` value and paste it or run `python auth_helper.py`.
-     - **Option 3 (CLI Auto):** Close Chrome and run `notebooklm-mcp-auth` in terminal.
+   - **User Guidance:** When explaining how to connect or recover a session, ALWAYS present the two clear options:
+     - **Opción 1: Extensión de 1-Clic (Rápida y recomendada):** Instalar `chrome_extension/` en `chrome://extensions` una sola vez. En NotebookLM hacer 1 clic en el icono `N` y decirle al agente *"conéctate"*.
+     - **Opción 2: Modo Manual (Sin extensiones):** Entrar a `notebooklm.google.com`, presionar `F12` -> `Network` -> recargar (`F5`) -> clic en `batchexecute` -> copiar el valor del encabezado `cookie:` de Request Headers y pegarlo en el chat o en `python auth_helper.py`.
    - **Never commit credentials:** Cookies and `auth.json` are excluded via `.gitignore`. Never write credentials directly into committed files.
 
 2. **Language Configuration:**
