@@ -1,37 +1,50 @@
-# 🚀 NotebookLM Antigravity MCP Setup
+# 🚀 NotebookLM Antigravity MCP Integration
 
-Este directorio contiene los archivos y la configuración necesarios para integrar **Google NotebookLM** dentro de **Antigravity IDE** a través del protocolo MCP (Model Context Protocol).
-
----
-
-## 📁 Estructura del Proyecto
-
-- **`.agents/skills/using-notebooklm-mcp/SKILL.md`**: Instrucciones estructuradas para que los agentes inteligentes de Antigravity sepan cómo interactuar de forma consistente con las herramientas del MCP.
-- **`cookies.txt`**: Archivo temporal utilizado para importar tus credenciales y cookies de sesión del navegador.
-- **`mcp_settings_backup.json`**: Una copia de respaldo de la configuración que agregamos a tu editor.
+Integración completa entre **Google NotebookLM** y **Google Antigravity IDE** a través del protocolo MCP (Model Context Protocol). Permite consultar cuadernos, investigar fuentes automáticamente con Deep Research, y generar entregables (audios, diapositivas, guías y quizzes) directamente desde el asistente inteligente de Antigravity.
 
 ---
 
-## ⚙️ ¿Dónde están las configuraciones reales?
+## 📁 Estructura del Repositorio
 
-Para que funcionen globalmente y a nivel de editor, los archivos se instalan en estas ubicaciones del sistema:
-
-1. **Credenciales (`auth.json`)**: 
-   Guardado en `C:\Users\Ramoncito\.notebooklm-mcp\auth.json`. Este archivo guarda tus tokens de sesión validados y es el que lee el servidor.
-   
-2. **Configuración del Editor (`cline_mcp_settings.json`)**:
-   Ubicado en el almacenamiento global de Antigravity IDE:
-   `c:\Users\Ramoncito\AppData\Roaming\Antigravity IDE\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
-   Esto le indica al editor que levante automáticamente el servidor MCP.
+- **`.agents/rules/notebooklm.md`**: Reglas globales de comportamiento del agente para manejar la autenticación, idiomas y organización.
+- **`.agents/skills/using-notebooklm-mcp/SKILL.md`**: Skill estandarizada de Antigravity para interactuar con todas las herramientas de NotebookLM MCP.
+- **`chrome_extension/`**: Mini-extensión de Chrome para extraer y sincronizar las cookies de sesión en 1 solo clic.
+- **`auth_helper.py`**: Script de soporte para validar, guardar y renovar tokens (soporta modo automático con `--auto` leyendo el portapapeles).
+- **`notebooklm_mcp_guide.md`**: Guía detallada paso a paso de instalación y solución de problemas.
+- **`.agents/Tutoriales/`**: Transcripciones y prompts maestros para NotebookLM y creación de dashboards.
 
 ---
 
-## 🛠️ Re-autenticación (Si tu sesión expira)
+## ⚡ Cómo Proceder (Guía para Cualquier Usuario)
 
-Si en el futuro recibes un error diciendo que tu sesión ha expirado:
-1. Abre tu terminal habitual (PowerShell o CMD).
-2. Ejecuta:
-   ```powershell
-   notebooklm-mcp-auth
-   ```
-3. Se abrirá una ventana de Chrome para que inicies sesión en Google, y el terminal guardará las cookies automáticamente.
+### Paso 1: Configurar el Servidor MCP
+Asegúrate de tener instalado el servidor MCP en tu sistema:
+```powershell
+uv tool install notebooklm-mcp-server
+```
+*(O `pip install notebooklm-mcp-server` si no usas uv)*.
+
+### Paso 2: Activar la Extensión de 1-Clic en Chrome
+Para evitar abrir DevTools (`F12`) cada vez que la sesión caduque:
+1. Abre en Chrome: `chrome://extensions`.
+2. Activa el interruptor **Modo de desarrollador** (arriba a la derecha).
+3. Haz clic en **Cargar descomprimida** (arriba a la izquierda).
+4. Selecciona la carpeta `chrome_extension` de este repositorio.
+
+### Paso 3: Conectar y Usar
+1. Inicia sesión en [NotebookLM](https://notebooklm.google.com).
+2. Haz clic en el icono de la extensión **NotebookLM Sync** en tu barra de extensiones de Chrome (copiará tus cookies al portapapeles).
+3. En Antigravity, dile al agente:
+   > *"Conéctate a NotebookLM"* o *"Actualiza sesión"*
+4. El agente leerá automáticamente tus credenciales y quedará 100% conectado.
+
+---
+
+## 🛠️ Métodos Alternativos de Autenticación
+
+Si no utilizas la extensión de Chrome, puedes usar cualquiera de estos métodos:
+- **Método Manual por DevTools:** Entra a `notebooklm.google.com` -> `F12` -> pestaña `Network` -> recarga (`F5`) -> haz clic en `batchexecute` -> copia el valor del encabezado `cookie:` y pégalo en el chat o en `cookies.txt`.
+- **Método CLI:** Cierra Chrome y ejecuta en terminal:
+  ```powershell
+  notebooklm-mcp-auth
+  ```

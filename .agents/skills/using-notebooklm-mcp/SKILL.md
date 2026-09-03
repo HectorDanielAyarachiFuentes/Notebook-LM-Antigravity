@@ -21,20 +21,23 @@ This skill provides step-by-step instructions on how to use the NotebookLM Model
 
 ## Authentication & Re-authentication Workflow
 
-If authentication is missing or expired:
+If authentication is missing or expired (RPC Error 16):
 
-1. **Quick Re-auth using `auth_helper.py`:**
-   Run in the workspace terminal:
+1. **Zero-Prompt Re-auth (Agent Auto-Check):**
+   The agent runs:
    ```powershell
-   python auth_helper.py
+   python auth_helper.py --auto
    ```
-   - Automatically inspects the clipboard for copied Google `cookie:` headers or reads `cookies.txt`.
-   - Formats, validates, saves to `~/.notebooklm-mcp/auth.json`, and tests connection.
-2. **If the user needs to provide cookies:**
-   Ask the user to:
-   - Open `https://notebooklm.google.com` (logged in) -> `F12` -> `Network` -> `F5`.
-   - Click `batchexecute` -> Request Headers -> Copy value of `cookie:`.
-   - Run `python auth_helper.py` or paste the value into `cookies.txt`.
+   If valid cookies are in the clipboard, it updates `~/.notebooklm-mcp/auth.json` immediately and calls `refresh_auth`.
+
+2. **1-Click Extraction via Chrome Extension (`chrome_extension/`):**
+   - User clicks the **NotebookLM Sync** extension icon in Chrome while on `notebooklm.google.com`.
+   - Cookies (including HttpOnly `SID`/`HSID`) are instantly copied to clipboard.
+   - User tells the agent: *"conéctate"* or *"actualiza sesión"*.
+
+3. **Fallback Extraction:**
+   - **DevTools:** `notebooklm.google.com` -> `F12` -> `Network` -> `F5` -> click `batchexecute` -> copy `cookie:` header -> run `python auth_helper.py` or paste in chat.
+   - **CLI Auto Mode:** Close Chrome and run `notebooklm-mcp-auth`.
 
 ## Workflow
 
