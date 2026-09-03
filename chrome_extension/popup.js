@@ -1,13 +1,10 @@
 const REQUIRED_KEYS = ["SID", "SAPISID", "HSID", "SSID"];
 
 async function getCookies() {
-  const [googleCookies, nlmCookies] = await Promise.all([
-    chrome.cookies.getAll({ domain: "google.com" }),
-    chrome.cookies.getAll({ domain: "notebooklm.google.com" })
-  ]);
+  const cookies = await chrome.cookies.getAll({ url: "https://notebooklm.google.com/" });
 
   const map = new Map();
-  for (const c of [...googleCookies, ...nlmCookies]) {
+  for (const c of cookies) {
     map.set(c.name, c.value);
   }
 
